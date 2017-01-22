@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Raymond/Art_Demo.unity
-  isLoaded: 1
-  isActive: 1
