@@ -42,5 +42,23 @@ public class Data : NetworkBehaviour {
 
 public class WaveMessage: MessageBase
 {
+	public int id;
 	public string str;
+
+}
+
+public class SetIDMessage: MessageBase
+{
+	public int id;
+}
+
+[CreateAssetMenu (fileName = "NarrativePlot", menuName = "Wave/NameList", order = 1)]
+public class NameListSO : ScriptableObject {
+	public List<string> names;
+}
+
+[CreateAssetMenu (fileName = "NarrativePlot", menuName = "Wave/NameList", order = 1)]
+public class TaskSO : ScriptableObject {
+	public string agent;
+	public string Location;
 }

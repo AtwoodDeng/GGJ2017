@@ -9,14 +9,9 @@ using System;
 public enum LogicEvents
 {
 	None=0,
-	FingerUp = 5,
+	RecieveWaveMessage = 10,
+	SendMessage = 11,
 
-	PlaceHeroPhase = 10,
-
-	StrategyPhase = 50,
-
-	SelectBlock = 100,
-	ConfirmHero = 101,
 }
 
 public class M_Event : MonoBehaviour {
