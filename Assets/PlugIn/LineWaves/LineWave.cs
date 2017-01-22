@@ -35,8 +35,10 @@ public class LineWave : MonoBehaviour {
 	Vector3 posVtxSizeMinusOne;
 	LineRenderer lrComp;
 
+	public bool Curve = false;
 	public AnimationCurve[] curves;
 	public float[] curvePower;
+	public float frequence = 1f;
 
 	void Update () {
 		lrComp = GetComponent<LineRenderer>();
@@ -68,8 +70,18 @@ public class LineWave : MonoBehaviour {
 			
 			if (origin == Origins.Start) {start = 0;}
 			else {start = lengh/2;}
-			
-			if (warp) {
+
+			if ( Curve )
+			{
+				float angleSum = 0 ;
+				for( int k = 0 ; k < curves.Length && k < curvePower.Length ; ++ k )
+				{
+					angleSum += curves[k].Evaluate( angle / frequence ) * curvePower[k];
+				}
+
+				lrComp.SetPosition(i, new Vector3(lengh/size*i - start, angleSum * ampT, sinAngleZ * ampT));
+				
+			}else if (warp) {
 				warpT = size - i;
 				warpT = warpT / size;
 				warpT = Mathf.Sin(Mathf.PI * warpT * (warpRandom+1));
