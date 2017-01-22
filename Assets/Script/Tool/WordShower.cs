@@ -7,11 +7,12 @@ using UnityEngine.UI;
 public class WordShower : MonoBehaviour {
 
 	[SerializeField] string baseStr;
-	[SerializeField] Text wordText;
+	[SerializeField] TextMesh wordText;
 	[SerializeField] Text baseText;
+	public static int WORD_LENGTH = 7;
 
-	int[] positions = new int[7];
-	int[] values = new int[7];
+	int[] positions = new int[WORD_LENGTH];
+	int[] values = new int[WORD_LENGTH];
 	int changeLength = 1;
 
 	public void SetBase( string str)

@@ -11,6 +11,7 @@ public class InteractDrag : Interactable {
 	private Vector3 offset;
 	private Vector3 oriPoint;
 	private Quaternion oriRotation;
+	protected GameObject touchObj;
 
 	bool IsTouch = false;
 
@@ -43,6 +44,7 @@ public class InteractDrag : Interactable {
 				transform.DOLookAt( hit.point - hit.normal * 0.02f , 1f );
 			}
 			IsTouch = true;
+			touchObj = hit.collider.gameObject;
 			transform.position = hit.point + hit.normal * 0.02f;
 		}
 		else{
@@ -52,6 +54,7 @@ public class InteractDrag : Interactable {
 				transform.DOLookAt( - Camera.main.transform.position + 2 * transform.position , 1f );
 			}
 			IsTouch = false;
+			touchObj = null;
 			Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 			Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint + offset);
 			transform.position = curPosition;
@@ -66,6 +69,7 @@ public class InteractDrag : Interactable {
 		transform.DOKill();
 		transform.position = oriPoint;
 		transform.rotation = oriRotation;
+		touchObj = null;
 	}
 
 }

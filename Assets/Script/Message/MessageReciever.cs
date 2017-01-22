@@ -20,7 +20,7 @@ public class MessageReciever : MonoBehaviour {
 	void OnRecieveWaveMessage( LogicArg arg )
 	{
 		WaveMessage msg = arg.GetMessage("Message" ) as WaveMessage;
-		shower.SetBase(msg.str);
+		shower.SetBase(msg.agent);
 	}
 
 	void OnEnable() {

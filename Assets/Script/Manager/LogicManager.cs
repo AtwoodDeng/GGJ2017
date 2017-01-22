@@ -10,6 +10,65 @@ public class LogicManager : MonoBehaviour {
 	public static LogicManager Instance{ get { return s_Instance; }}
 	public LogicManager(){ s_Instance = this; }
 
+	[SerializeField] NameListSO AgentNameList;
+	[SerializeField] NameListSO LocationNameList;
+	[SerializeField] GameObject paperPrefab;
+	[SerializeField] Transform sendTransform;
+	[SerializeField] Transform getTransform;
 
+	void OnRecieveWaveMessage( LogicArg arg )
+	{
+		WaveMessage msg = arg.GetMessage("Message" ) as WaveMessage;
+		RecieveTask( msg.agent , msg.location);
+	}
+
+	void OnEnable() {
+		M_Event.RegisterEvent(LogicEvents.RecieveWaveMessage, OnRecieveWaveMessage);
+	}
+
+	void OnDisable() {
+		M_Event.UnregisterEvent(LogicEvents.RecieveWaveMessage, OnRecieveWaveMessage);
+	}
+
+	void Start()
+	{
+		StartCoroutine( TaskGenerate());
+	}
+
+	IEnumerator TaskGenerate()
+	{
+		while( true )
+		{
+			CreateTask();
+			yield return new WaitForSeconds( 30f );
+		}
+	}
+
+	public void CreateTask()
+	{
+		GameObject paper = Instantiate( paperPrefab ) as GameObject;
+		paper.transform.position = sendTransform.position;
+
+		Task t = new Task();
+		Debug.Log(AgentNameList.names.Count);
+		t.taskData.Agent = AgentNameList.names[ Random.Range( 0 , AgentNameList.names.Count) ];
+		t.taskData.Location = LocationNameList.names[ Random.Range( 0 , LocationNameList.names.Count) ];
+		Paper paperCom = paper.GetComponent<Paper>();
+		if ( paperCom != null )
+			paperCom.Init(t,Paper.Type.Encode);
+	}
+
+	public void RecieveTask( string agent , string location)
+	{
+		GameObject paper = Instantiate( paperPrefab ) as GameObject;
+		paper.transform.position = getTransform.position;
+
+		Task t = new Task();
+		t.taskData.Agent = AgentNameList.names[ Random.Range( 0 , AgentNameList.names.Count) ];
+		t.taskData.Location = LocationNameList.names[ Random.Range( 0 , LocationNameList.names.Count) ];
+		Paper paperCom = paper.GetComponent<Paper>();
+		if ( paperCom != null )
+			paperCom.Init(t,Paper.Type.Decode);
+	}
 
 }

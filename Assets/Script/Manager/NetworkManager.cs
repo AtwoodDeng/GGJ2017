@@ -70,7 +70,7 @@ public class NetworkManager : MonoBehaviour {
 	public void OnRecieveMessage( NetworkMessage netMsg)
 	{
 		WaveMessage msg = netMsg.ReadMessage<WaveMessage>();
-		Debug.Log(string.Format("Recieve Message id {0} str {1}" , msg.id , msg.str));
+		Debug.Log(string.Format("Recieve Message id {0} str {1}" , msg.id , msg.agent));
 		if ( msg.id != clientID ) {
 			LogicArg arg = new LogicArg(this);
 			arg.AddMessage("Message" , msg );
@@ -87,7 +87,7 @@ public class NetworkManager : MonoBehaviour {
 	{
 		msg.id = clientID;
 		Instance.client.Send(SEND_MSG , msg );
-		Debug.Log("Send Message" + msg.str);
+		Debug.Log("Send Message" + msg.agent);
 	}
 
 	#endregion

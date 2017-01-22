@@ -42,7 +42,7 @@ public class NetworkTest : MonoBehaviour {
 	void SendWaveMsg()
 	{
 		WaveMessage msg = new WaveMessage();
-		msg.str = sendMsg;
+		msg.agent = sendMsg;
 		client.Send( msgID , msg);
 		Debug.Log("Send " + sendMsg);
 	}
@@ -57,8 +57,8 @@ public class NetworkTest : MonoBehaviour {
 	public void RecieveMsg(NetworkMessage netMsg)
 	{
 		WaveMessage msg = netMsg.ReadMessage<WaveMessage>();
-		if ( msg.str != sendMsg )
-			recieveMsg = msg.str;
+		if ( msg.agent != sendMsg )
+			recieveMsg = msg.agent;
 		//		Debug.Log("On Message " + msg.id);
 	}
 

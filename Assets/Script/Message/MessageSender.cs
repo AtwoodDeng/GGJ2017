@@ -4,27 +4,50 @@ using UnityEngine;
 
 public class MessageSender : MonoBehaviour {
 
-	[SerializeField] List<WaveScrollBar> buttonList = new List<WaveScrollBar>();
+	[SerializeField] Transform agentTrans;
+	[SerializeField] List<WaveScrollBar> agentButton = new List<WaveScrollBar>();
+	[SerializeField] WordShower agentShower;
+	[SerializeField] Transform locationTrans;
+	[SerializeField] List<WaveScrollBar> locationButton = new List<WaveScrollBar>();
+	[SerializeField] WordShower locationShower;
 
-	[SerializeField] WordShower shower;
+	public void Awake()
+	{
+		agentButton.AddRange( agentTrans.GetComponentsInChildren<WaveScrollBar>());
+		if ( agentShower == null )
+			agentShower = agentTrans.GetComponent<WordShower>();
+		locationButton.AddRange( locationTrans.GetComponentsInChildren<WaveScrollBar>());
+		if ( locationShower == null )
+			locationShower = locationTrans.GetComponent<WordShower>();
+	}
 
 	public void Update()
 	{
-		for( int i = 0 ; i < 7  && i < buttonList.Count; ++ i )
+		for( int i = 0 ; i < WordShower.WORD_LENGTH && i < agentButton.Count; ++ i )
 		{
-			shower.SetPosition( i , i );
-			shower.SetValue( i , buttonList[i].GetValue());
+			agentShower.SetPosition( i , i );
+			agentShower.SetValue( i , agentButton[i].GetValue());
 		}
 
-
+		for( int i = 0 ; i < WordShower.WORD_LENGTH && i < locationButton.Count; ++ i )
+		{
+			locationShower.SetPosition( i , i );
+			locationShower.SetValue( i , locationButton[i].GetValue());
+		}
 	}
-
 
 	public void SendWaveMessage()
 	{
 		WaveMessage msg = new WaveMessage();
-		msg.str = shower.GetWordResult();
+		msg.agent = agentShower.GetWordResult();
+		msg.location = locationShower.GetWordResult();
 
 		NetworkManager.SendWaveMessage( msg );
+	}
+
+	public void SetBase( string agent , string location )
+	{
+		agentShower.SetBase( agent );
+		locationShower.SetBase( location);
 	}
 }

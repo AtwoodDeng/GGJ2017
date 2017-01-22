@@ -43,7 +43,8 @@ public class Data : NetworkBehaviour {
 public class WaveMessage: MessageBase
 {
 	public int id;
-	public string str;
+	public string agent;
+	public string location;
 
 }
 
@@ -58,7 +59,19 @@ public class NameListSO : ScriptableObject {
 }
 
 [CreateAssetMenu (fileName = "NarrativePlot", menuName = "Wave/NameList", order = 1)]
+[System.Serializable]
 public class TaskSO : ScriptableObject {
-	public string agent;
+	public string Agent;
 	public string Location;
+}
+
+public class Task
+{
+	public TaskSO taskData;
+
+	public Task()
+	{
+		taskData = new TaskSO();
+	}
+
 }
