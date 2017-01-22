@@ -21,6 +21,14 @@ public class Paper : InteractDrag {
 		m_task = task;
 	}
 
+	public override void MouseDown ()
+	{
+		base.MouseDown ();
+		gameObject.layer = LayerMask.NameToLayer("Focus");
+		foreach(Transform trans in GetComponentsInChildren<Transform>())
+			trans.gameObject.layer = LayerMask.NameToLayer("Focus");
+	}
+
 	public override void MouseUp ()
 	{
 		bool ifStick = false;
@@ -30,9 +38,11 @@ public class Paper : InteractDrag {
 			if ( stick != null )
 			{
 				stick.Stick( gameObject );
-				GetComponent<Rigidbody>().isKinematic = true;
 				ifStick = true;
+
+				GetComponent<Rigidbody>().isKinematic = true;
 				InteractManager.Instance.LockInteractable = false;
+				touchObj = null;
 			}
 		}
 
@@ -40,5 +50,8 @@ public class Paper : InteractDrag {
 		{
 			base.MouseUp ();
 		}
+		gameObject.layer = LayerMask.NameToLayer("Paper");
+		foreach(Transform trans in GetComponentsInChildren<Transform>())
+			trans.gameObject.layer = LayerMask.NameToLayer("Paper");
 	}
 }

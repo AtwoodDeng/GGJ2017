@@ -10,10 +10,16 @@ public class WordShower : MonoBehaviour {
 	[SerializeField] TextMesh wordText;
 	[SerializeField] Text baseText;
 	public static int WORD_LENGTH = 7;
+	public static string RESET_TEXT = "*******";
 
 	int[] positions = new int[WORD_LENGTH];
 	int[] values = new int[WORD_LENGTH];
 	int changeLength = 1;
+
+	void Start()
+	{
+		Reset();
+	}
 
 	public void SetBase( string str)
 	{
@@ -55,6 +61,9 @@ public class WordShower : MonoBehaviour {
 
 	char GetMoveChar( char inChar , int move)
 	{
+		if ( inChar == '*' ) 
+			return inChar;
+		
 		int ori = Convert.ToInt32(inChar);
 		ori += move;
 		if ( ori < Convert.ToInt32('A') )
@@ -98,6 +107,12 @@ public class WordShower : MonoBehaviour {
 		wordText.text = res;
 		if ( baseText != null )
 			baseText.text = baseStr;
+
+	}
+
+	public void Reset()
+	{
+		SetBase(RESET_TEXT);
 
 	}
 }

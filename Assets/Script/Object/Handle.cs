@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class Handle : InteractRollable {
 
 	public UnityEvent SendFunc;
+
+
 
 	public override void MouseStay ()
 	{
@@ -22,10 +25,10 @@ public class Handle : InteractRollable {
 		}
 
 		value -= angle / YMax / 2f;
-		value = Mathf.Clamp( value , -0.5f , 0.5f );
+		value = Mathf.Clamp( value , -1f , 0.1f );
 
 		Vector3 eular = transform.localEulerAngles;
-		eular.x = value * YMax;
+		eular.x = value * YMax + oriLocalEular.x;
 		transform.localEulerAngles = eular;
 
 		oriOffset = temOff;
@@ -35,6 +38,13 @@ public class Handle : InteractRollable {
 	{
 		base.MouseUp ();
 
+		if ( Mathf.Abs(value) > 0.6f )
+		{
+			SendFunc.Invoke();
+		}
+
+		transform.DOLocalRotate( oriLocalEular , 0.2f );
+		value = 0;
 	}
 
 }

@@ -9,6 +9,13 @@ public class InteractRollable : Interactable {
 	[SerializeField] protected float YMax = 180f;
 	[SerializeField] protected float value = 0;
 
+	protected Vector3 oriLocalEular;
+
+	void Start()
+	{
+		oriLocalEular = transform.localEulerAngles;
+	}
+
 	public override void MouseDown ()
 	{
 		base.MouseDown ();
@@ -48,6 +55,12 @@ public class InteractRollable : Interactable {
 	{
 		base.MouseUp ();
 		InteractManager.Instance.LockInteractable = false;
+	}
+
+	virtual public void Reset()
+	{
+		value = 0;
+		transform.localEulerAngles = oriLocalEular;
 	}
 
 }

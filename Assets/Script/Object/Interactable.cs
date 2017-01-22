@@ -29,6 +29,20 @@ public class Interactable : MonoBehaviour {
 	}
 
 
+	public virtual void RightMouseDown()
+	{
+
+	}
+
+	public virtual void RightMouseStay()
+	{
+	}
+
+	public virtual void RightMouseUp()
+	{
+	}
+
+
 //	 void OnTriggerEnter( Collider col )
 //	{
 //		if (col.gameObject.tag == "Player") {

@@ -86,8 +86,11 @@ public class NetworkManager : MonoBehaviour {
 	public void SendWaveMessageClient( WaveMessage msg )
 	{
 		msg.id = clientID;
-		Instance.client.Send(SEND_MSG , msg );
-		Debug.Log("Send Message" + msg.agent);
+		if ( Instance.client != null )
+		{
+			Instance.client.Send(SEND_MSG , msg );
+			Debug.Log("Send Message" + msg.agent);
+		}
 	}
 
 	#endregion

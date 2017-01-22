@@ -78,6 +78,17 @@ public class InteractManager : MBehavior{
 			else if ( Input.GetMouseButtonUp(0))
 			{
 				tem_Interactable.MouseUp();
+			}else if ( Input.GetMouseButtonDown(1))
+			{
+				tem_Interactable.RightMouseDown();	
+			}
+			else if ( Input.GetMouseButton( 1 ))
+			{
+				tem_Interactable.RightMouseStay();
+			}
+			else if ( Input.GetMouseButtonUp(1))
+			{
+				tem_Interactable.RightMouseUp();
 			}
 		}
 	}

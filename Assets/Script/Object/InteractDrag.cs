@@ -64,11 +64,18 @@ public class InteractDrag : Interactable {
 	public override void MouseUp ()
 	{
 		base.MouseUp ();
-		GetComponent<Rigidbody>().isKinematic = false;
-		InteractManager.Instance.LockInteractable = false;
+		EndDrag();
+
 		transform.DOKill();
 		transform.position = oriPoint;
 		transform.rotation = oriRotation;
+	}
+
+	public void EndDrag()
+	{
+
+		GetComponent<Rigidbody>().isKinematic = false;
+		InteractManager.Instance.LockInteractable = false;
 		touchObj = null;
 	}
 

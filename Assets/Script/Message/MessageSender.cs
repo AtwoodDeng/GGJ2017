@@ -50,4 +50,20 @@ public class MessageSender : MonoBehaviour {
 		agentShower.SetBase( agent );
 		locationShower.SetBase( location);
 	}
+
+	public void Reset()
+	{
+		for( int i = 0 ; i < WordShower.WORD_LENGTH && i < agentButton.Count; ++ i )
+		{
+			agentButton[i].Reset();
+		}
+		agentShower.Reset();
+
+		for( int i = 0 ; i < WordShower.WORD_LENGTH && i < locationButton.Count; ++ i )
+		{
+			locationButton[i].Reset();
+		}
+		locationShower.Reset();
+		
+	}
 }

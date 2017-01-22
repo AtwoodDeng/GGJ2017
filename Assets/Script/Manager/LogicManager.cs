@@ -15,6 +15,7 @@ public class LogicManager : MonoBehaviour {
 	[SerializeField] GameObject paperPrefab;
 	[SerializeField] Transform sendTransform;
 	[SerializeField] Transform getTransform;
+	[SerializeField] MessageSender msgSender;
 
 	void OnRecieveWaveMessage( LogicArg arg )
 	{
@@ -70,5 +71,6 @@ public class LogicManager : MonoBehaviour {
 		if ( paperCom != null )
 			paperCom.Init(t,Paper.Type.Decode);
 	}
+
 
 }
