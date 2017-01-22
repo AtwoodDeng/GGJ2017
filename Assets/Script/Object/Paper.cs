@@ -24,9 +24,9 @@ public class Paper : InteractDrag {
 	public override void MouseDown ()
 	{
 		base.MouseDown ();
-		gameObject.layer = LayerMask.NameToLayer("Focus");
-		foreach(Transform trans in GetComponentsInChildren<Transform>())
-			trans.gameObject.layer = LayerMask.NameToLayer("Focus");
+//		gameObject.layer = LayerMask.NameToLayer("Focus");
+//		foreach(Transform trans in GetComponentsInChildren<Transform>())
+//			trans.gameObject.layer = LayerMask.NameToLayer("Focus");
 	}
 
 	public override void MouseUp ()
@@ -50,8 +50,8 @@ public class Paper : InteractDrag {
 		{
 			base.MouseUp ();
 		}
-		gameObject.layer = LayerMask.NameToLayer("Paper");
-		foreach(Transform trans in GetComponentsInChildren<Transform>())
-			trans.gameObject.layer = LayerMask.NameToLayer("Paper");
+//		gameObject.layer = LayerMask.NameToLayer("Paper");
+//		foreach(Transform trans in GetComponentsInChildren<Transform>())
+//			trans.gameObject.layer = LayerMask.NameToLayer("Paper");
 	}
 }
