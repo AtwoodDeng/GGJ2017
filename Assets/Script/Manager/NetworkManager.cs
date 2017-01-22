@@ -16,8 +16,13 @@ public class NetworkManager : MonoBehaviour {
 	static short SEND_MSG = 201;
 	static short SETUP_ID = 250;
 
+	static short DETECT_MSG = 300;
+	static short CLIENT_DETECT_MSG = 301;
+
 
 	string inputHost = "localhost";
+
+	Dictionary<int,WaveMessage> waves;
 
 	#region Server
 	void InitializeServer()
@@ -25,6 +30,7 @@ public class NetworkManager : MonoBehaviour {
 		NetworkServer.Listen(port);
 		NetworkServer.RegisterHandler(MsgType.Connect, OnServerConnect);
 		NetworkServer.RegisterHandler(SEND_MSG, OnSendMessage);
+		NetworkServer.RegisterHandler(DETECT_MSG, OnDetectMessage);
 	}
 
 	void OnServerConnect(NetworkMessage netMsg)
@@ -39,8 +45,25 @@ public class NetworkManager : MonoBehaviour {
 	void OnSendMessage( NetworkMessage netMsg )
 	{
 		WaveMessage msg = netMsg.ReadMessage<WaveMessage>();
+		waves.Add( msg.MsgID , msg );
 		NetworkServer.SendToAll( RECIEVE_MSG , msg);
 	}
+	void OnDetectMessage( NetworkMessage netMsg )
+	{
+		DetectMessage msg = netMsg.ReadMessage<DetectMessage>();
+		int id = msg.MsgID;
+		if ( waves.ContainsKey( id ))
+		{
+			msg.isSuccess = Compare( waves[id] , msg );
+			NetworkServer.SendToAll( CLIENT_DETECT_MSG , msg );
+		}
+	}
+
+	bool Compare( WaveMessage wave , DetectMessage detect )
+	{
+		return (wave.agentOri == detect.agent) && ( wave.locationOri == detect.location); 
+	}
+
 	#endregion
 
 	#region Client
@@ -78,6 +101,24 @@ public class NetworkManager : MonoBehaviour {
 		}
 	}
 
+	public void OnRecieveDetectMessage( NetworkMessage netMsg)
+	{
+		DetectMessage msg = netMsg.ReadMessage<DetectMessage>();
+		Debug.Log(string.Format("Recieve Detect Message id {0} str {1}" , msg.id , msg.agent));
+		if ( msg.id != clientID ) {
+//			LogicArg arg = new LogicArg(this);
+//			arg.AddMessage("Message" , msg );
+//			M_Event.FireLogicEvent( LogicEvents.RecieveWaveMessage, arg );
+		}else{
+			if ( !msg.isSuccess ) 
+			{
+				LogicArg arg = new LogicArg(this);
+				arg.AddMessage("name" , msg.agent );
+				M_Event.FireLogicEvent( LogicEvents.AgentDead , arg );
+			}
+		}
+	}
+
 	static public void SendWaveMessage( WaveMessage msg )
 	{
 		NetworkManager.Instance.SendWaveMessageClient( msg );
@@ -86,10 +127,21 @@ public class NetworkManager : MonoBehaviour {
 	public void SendWaveMessageClient( WaveMessage msg )
 	{
 		msg.id = clientID;
+
 		if ( Instance.client != null )
 		{
 			Instance.client.Send(SEND_MSG , msg );
-			Debug.Log("Send Message" + msg.agent);
+			Debug.Log("Send Wave Message" + msg.agent + " " + msg.location);
+		}
+	}
+
+	public void DetectMessageClient( DetectMessage msg )
+	{
+		msg.id = clientID;
+		if ( Instance.client != null )
+		{
+			Instance.client.Send(SEND_MSG , msg );
+			Debug.Log("Send Detect Message" + msg.agent + " " + msg.location);
 		}
 	}
 

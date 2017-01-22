@@ -39,10 +39,22 @@ public class MessageSender : MonoBehaviour {
 	public void SendWaveMessage()
 	{
 		WaveMessage msg = new WaveMessage();
+		msg.MsgID = CalculateSeconds();
 		msg.agent = agentShower.GetWordResult();
 		msg.location = locationShower.GetWordResult();
+		msg.agentOri = agentShower.GetBase();
+		msg.locationOri = agentShower.GetBase();
 
 		NetworkManager.SendWaveMessage( msg );
+	}
+
+	public int CalculateSeconds()
+	{
+		System.DateTime dt = new System.DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Local);//from 1970/1/1 00:00:00 to now
+		System.DateTime dtNow = System.DateTime.Now;
+		System.TimeSpan result = dtNow.Subtract(dt);
+		int seconds = System.Convert.ToInt32(result.TotalSeconds);
+		return seconds;
 	}
 
 	public void SetBase( string agent , string location )
@@ -64,6 +76,30 @@ public class MessageSender : MonoBehaviour {
 			locationButton[i].Reset();
 		}
 		locationShower.Reset();
-		
+	}
+
+	/// <summary>
+	/// Gets the button value.
+	/// </summary>
+	/// <returns>The button value.</returns>
+	/// <param name="index"> 0 for agent , 1 for location.</param>
+	public float[] GetButtonValue( int index )
+	{
+		float[] res = new float[1];
+		if ( index == 0 )
+		{
+			res = new float[agentButton.Count];	
+			for( int i = 0 ; i < agentButton.Count ; ++ i  )
+			{
+				res[i] = agentButton[i].GetValue();
+			}
+		}else if ( index == 1 ) {
+			res = new float[locationButton.Count];	
+			for( int i = 0 ; i < locationButton.Count ; ++ i  )
+			{
+				res[i] = locationButton[i].GetValue();
+			}
+		}
+		return res;
 	}
 }

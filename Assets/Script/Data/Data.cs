@@ -43,8 +43,22 @@ public class Data : NetworkBehaviour {
 public class WaveMessage: MessageBase
 {
 	public int id;
+	public int MsgID;
 	public string agent;
 	public string location;
+	public string agentOri;
+	public string locationOri;
+
+}
+
+
+public class DetectMessage: MessageBase
+{
+	public int id;
+	public int MsgID;
+	public string agent;
+	public string location;
+	public bool isSuccess;
 
 }
 

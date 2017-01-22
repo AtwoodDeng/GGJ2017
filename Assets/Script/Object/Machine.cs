@@ -11,8 +11,15 @@ public class Machine : Stickable {
 		base.Stick (obj);
 
 		Paper paper = obj.GetComponent<Paper>();
-		MessageSender.SetBase( paper.m_task.taskData.Agent , paper.m_task.taskData.Location);
-		temPaper = paper;
+		if ( paper != null )
+		{
+			MessageSender.SetBase( paper.Agent , paper.Location);
+			temPaper = paper;
+
+			LogicArg arg = new LogicArg(this);
+			arg.AddMessage("paper" , paper );
+			M_Event.FireLogicEvent( LogicEvents.StickPaper , arg );
+		}
 	}
 
 	public void Reset()

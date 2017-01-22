@@ -26,6 +26,11 @@ public class WordShower : MonoBehaviour {
 		baseStr = str;
 	}
 
+	public string GetBase()
+	{
+		return baseStr;
+	}
+
 	public void SetPosition( int index , float val )
 	{
 		positions[index] = (int)(val * baseStr.Length);

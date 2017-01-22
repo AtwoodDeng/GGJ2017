@@ -12,6 +12,13 @@ public enum LogicEvents
 	RecieveWaveMessage = 10,
 	SendMessage = 11,
 
+	SelectAgentName = 20,
+	SelectLocation =21,
+
+	StickPaper = 30,
+
+	AgentDead = 40,
+
 }
 
 public class M_Event : MonoBehaviour {

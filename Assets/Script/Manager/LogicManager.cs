@@ -20,7 +20,7 @@ public class LogicManager : MonoBehaviour {
 	void OnRecieveWaveMessage( LogicArg arg )
 	{
 		WaveMessage msg = arg.GetMessage("Message" ) as WaveMessage;
-		RecieveTask( msg.agent , msg.location);
+		RecieveTask( msg.agent , msg.location, msg.MsgID);
 	}
 
 	void OnEnable() {
@@ -56,10 +56,10 @@ public class LogicManager : MonoBehaviour {
 		t.taskData.Location = LocationNameList.names[ Random.Range( 0 , LocationNameList.names.Count) ];
 		Paper paperCom = paper.GetComponent<Paper>();
 		if ( paperCom != null )
-			paperCom.Init(t,Paper.Type.Encode);
+			paperCom.Init(t,Paper.Type.Encode,0);
 	}
 
-	public void RecieveTask( string agent , string location)
+	public void RecieveTask( string agent , string location , int msgID)
 	{
 		GameObject paper = Instantiate( paperPrefab ) as GameObject;
 		paper.transform.position = getTransform.position;
@@ -69,7 +69,7 @@ public class LogicManager : MonoBehaviour {
 		t.taskData.Location = LocationNameList.names[ Random.Range( 0 , LocationNameList.names.Count) ];
 		Paper paperCom = paper.GetComponent<Paper>();
 		if ( paperCom != null )
-			paperCom.Init(t,Paper.Type.Decode);
+			paperCom.Init(t,Paper.Type.Decode,msgID);
 	}
 
 

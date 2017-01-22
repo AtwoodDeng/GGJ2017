@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 61cbb1fea9d5e4635a7be309bc18ecd5
+timeCreated: 1485127380
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: CPMono_v07
+  fontNames:
+  - CPMono_v07
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5137cd6778bba40259985910abb8e09f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

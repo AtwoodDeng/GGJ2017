@@ -24,8 +24,8 @@ public class Handle : InteractRollable {
 			angle = -angle;
 		}
 
-		value -= angle / YMax / 2f;
-		value = Mathf.Clamp( value , -1f , 0.1f );
+		value += angle / YMax / 2f;
+		value = Mathf.Clamp( value , -0.1f , 0.5f );
 
 		Vector3 eular = transform.localEulerAngles;
 		eular.x = value * YMax + oriLocalEular.x;
@@ -38,7 +38,7 @@ public class Handle : InteractRollable {
 	{
 		base.MouseUp ();
 
-		if ( Mathf.Abs(value) > 0.6f )
+		if ( Mathf.Abs(value) > 0.35f )
 		{
 			SendFunc.Invoke();
 		}
